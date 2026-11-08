@@ -85,8 +85,9 @@
 ---
 
 ## 3. Live Deployment & Repository Links
-- **Official Production Dashboard (Vercel Global CDN)**: **[https://payshield-ai-pied.vercel.app](https://payshield-ai-pied.vercel.app)**
-- **Public GitHub Repository**: [https://github.com/Lambdacoder09/PayShield-AI](https://github.com/Lambdacoder09/PayShield-AI)
+- **Official Production Dashboard (Vercel Global CDN)**: **[https://dist-nine-rho-9bsggti1v9.vercel.app](https://dist-nine-rho-9bsggti1v9.vercel.app)**
+- **New Public GitHub Repository**: **[https://github.com/Lambdacoder09/PayShield-Engine](https://github.com/Lambdacoder09/PayShield-Engine)**
+- **Public GitHub Mirror**: [https://github.com/Lambdacoder09/PayShield-AI](https://github.com/Lambdacoder09/PayShield-AI)
 - **Hugging Face Mirror**: [https://huggingface.co/spaces/neds0009/payshield-ai-explorer](https://huggingface.co/spaces/neds0009/payshield-ai-explorer)
 - **Local Standalone Artifact**: [interactive_architecture.html](file:///c:/Users/zayed/OneDrive/Desktop/projects/PayShield%20AI/interactive_architecture.html)
 - **Master Process & Commercial Guide (PDF)**: [PayShield_AI_Processes_Explained.pdf](file:///c:/Users/zayed/OneDrive/Desktop/projects/PayShield%20AI/PayShield_AI_Processes_Explained.pdf)
