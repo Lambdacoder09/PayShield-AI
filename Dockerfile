@@ -1,12 +1,12 @@
 # Multi-stage Dockerfile for Hugging Face Spaces (Port 7860, 2 vCPU, 16 GB RAM)
 # 100% Free, Zero-Card Cloud Deployment
 
-# Stage 1: Build React Frontend
+# Stage 1: Build React Frontend Console
 FROM node:20-slim AS frontend-builder
 WORKDIR /app/frontend
-COPY architecture-explorer/package*.json ./
+COPY package*.json tsconfig*.json vite.config.ts index.html ./
 RUN npm install
-COPY architecture-explorer/ ./
+COPY src/ ./src/
 RUN npm run build
 
 # Stage 2: Python Backend & Static Server
@@ -33,8 +33,8 @@ COPY app.py /app/app.py
 COPY LICENSE /app/LICENSE
 COPY README.md /app/README.md
 
-# Copy built frontend assets
-COPY --from=frontend-builder /app/frontend/dist /app/architecture-explorer/dist
+# Copy built frontend assets to /app/dist
+COPY --from=frontend-builder /app/frontend/dist /app/dist
 
 # Non-root user for security (Hugging Face standard UID 1000)
 RUN useradd -m -u 1000 appuser && \
@@ -44,4 +44,5 @@ USER appuser
 EXPOSE 7860
 
 CMD ["python", "app.py"]
+
 

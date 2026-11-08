@@ -93,8 +93,9 @@ async def telemetry_websocket(websocket: WebSocket):
     except WebSocketDisconnect:
         active_connections.remove(websocket)
 
-# Mount compiled React frontend if present
-static_dir = os.path.join(os.path.dirname(__file__), "..", "..", "..", "architecture-explorer", "dist")
-if os.path.exists(static_dir):
-    app.mount("/", StaticFiles(directory=static_dir, html=True), name="frontend")
+# Mount compiled React frontend console if present
+dist_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "dist"))
+if os.path.exists(dist_dir):
+    app.mount("/", StaticFiles(directory=dist_dir, html=True), name="frontend")
+
 

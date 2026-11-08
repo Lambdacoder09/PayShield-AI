@@ -72,6 +72,10 @@ class DualInferenceEngine:
         self.copod_model = COPOD(contamination=0.05)
         self.copod_model.fit(X_norm)
 
+        # 3. Warm up JIT & C++ native inference buffers
+        dummy_feats = {k: 0.0 for k in FEATURE_ORDER}
+        self.predict_risk(dummy_feats)
+
     def predict_risk(self, feature_dict: Dict[str, float]) -> Tuple[float, float, float, Dict[str, float]]:
         """
         Returns: (blended_score, xgb_score, copod_score, feature_contributions)
