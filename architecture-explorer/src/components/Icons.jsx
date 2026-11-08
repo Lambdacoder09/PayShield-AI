@@ -84,7 +84,7 @@ export const IconAlert = ({ className = "w-5 h-5", color = "#f59e0b" }) => (
 export const AlertTriangle = IconAlert;
 
 export const IconBlock = ({ className = "w-5 h-5", color = "#ef4444" }) => (
-  <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
+  <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24" style={{ maxWidth: '100%', maxHeight: '100%', display: 'inline-block' }}>
     <circle cx="12" cy="12" r="10" />
     <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
   </svg>
