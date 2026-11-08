@@ -97,3 +97,4 @@ async def telemetry_websocket(websocket: WebSocket):
 static_dir = os.path.join(os.path.dirname(__file__), "..", "..", "..", "architecture-explorer", "dist")
 if os.path.exists(static_dir):
     app.mount("/", StaticFiles(directory=static_dir, html=True), name="frontend")
+

@@ -77,8 +77,16 @@
 
 ## Status Tracker
 - [x] Architecture Specification & Commercial Licensing Audit Complete
-- [ ] **Piece 1: The Intelligence Core Pipeline** (Pending Start)
-- [ ] **Piece 2: Scenario Engine & Benchmark Suite** (Pending)
-- [ ] **Piece 3: Interactive SOC Operations Console** (Pending)
-- [ ] **Piece 4: Cloud Deployment & Hackathon Pitch** (Pending)
+- [x] **Piece 1: The Intelligence Core Pipeline** (FastAPI, Ingestion, NetworkX Graph, Sliding Velocity, Dual ML XGBoost + PyOD, FPO Decision Matrix, XAI)
+- [x] **Piece 2: Scenario Engine & Benchmark Suite** (5 Reproducible Scenarios, 100% Passing Pytest Suite, Sub-30ms P95 Latency SLA Verified)
+- [x] **Piece 3: Interactive SOC Operations Console** (Vite + React 19 Frontend with Vis.js Graph Canvas, Telemetry & Scenario Bar)
+- [x] **Piece 4: Cloud Deployment & Hackathon Pitch** (Deployed to Cloud, GitHub Repository Created & Pushed)
+
+---
+
+## 3. Live Deployment & Repository Links
+- **Live Cloud Web App**: [https://huggingface.co/spaces/neds0009/payshield-ai-explorer](https://huggingface.co/spaces/neds0009/payshield-ai-explorer)
+- **Public GitHub Repository**: [https://github.com/Lambdacoder09/PayShield-AI](https://github.com/Lambdacoder09/PayShield-AI)
+- **Local Interactive Dashboard**: [interactive_architecture.html](file:///c:/Users/zayed/OneDrive/Desktop/projects/PayShield%20AI/interactive_architecture.html)
+- **Master Process & Commercial Guide (PDF)**: [PayShield_AI_Processes_Explained.pdf](file:///c:/Users/zayed/OneDrive/Desktop/projects/PayShield%20AI/PayShield_AI_Processes_Explained.pdf)
 
