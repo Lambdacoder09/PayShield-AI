@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { Activity, ArrowRight, BadgeCheck, BookOpen, Check, ChevronDown, CircleHelp, Code2, Copy, Fingerprint, Globe2, Layers3, LockKeyhole, MapPin, Network, Play, Radar, RotateCcw, ShieldAlert, ShieldCheck, SlidersHorizontal, Timer, Waypoints, X } from 'lucide-react'
+import ThreeGlobe from './components/ThreeGlobe'
+import ThreeGraphRing from './components/ThreeGraphRing'
+import AnimatedCounter from './components/AnimatedCounter'
 
 export type WorkbenchView = 'judge' | 'architecture' | 'simulator' | 'graph' | 'fpo' | 'api'
 type Decision = 'ALLOW' | 'CHALLENGE' | 'BLOCK'
@@ -50,8 +53,104 @@ function FlightDiagram({ traveler }: { traveler: boolean }) {
 }
 
 function CaseDiagram({ id }: { id: string }) {
-  if (id === 'travel' || id === 'traveler') return <FlightDiagram traveler={id === 'traveler'}/>
-  if (id === 'ring') return <div className="case-diagram ring-diagram"><svg viewBox="0 0 650 235" role="img" aria-label="Five accounts linked to a shared emulator and stolen card"><defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e7ecf1"/></pattern></defs><rect width="650" height="235" rx="12" fill="url(#grid)"/>{[42,78,114,150,186].map((y,i)=><g key={i}><line x1="154" y1={y} x2="322" y2="87" stroke="#e1857d" strokeDasharray="4 4"/><line x1="154" y1={y} x2="322" y2="161" stroke="#e2b66b" strokeDasharray="4 4"/><circle cx="130" cy={y} r="17" fill="#fff" stroke="#e28178" strokeWidth="2"/><text x="130" y={y+4} textAnchor="middle">A{i+1}</text></g>)}<rect x="284" y="65" width="116" height="43" rx="8" fill="#f2efff" stroke="#aa9bdf"/><text x="342" y="84" textAnchor="middle">DEV_EMU_77</text><text x="342" y="98" textAnchor="middle" className="minor-label">shared emulator · degree 5</text><rect x="284" y="139" width="116" height="43" rx="8" fill="#fff7e8" stroke="#e7c782"/><text x="342" y="158" textAnchor="middle">CARD_4111</text><text x="342" y="172" textAnchor="middle" className="minor-label">stolen card · degree 5</text><line x1="400" y1="87" x2="507" y2="122" stroke="#e28178" strokeWidth="2"/><circle cx="535" cy="122" r="23" fill="#fff0ee" stroke="#e28178" strokeWidth="2"/><text x="535" y="126" textAnchor="middle">MULE</text><text x="342" y="220" textAnchor="middle" className="map-caption">10 SHARED-ENTITY EDGES · 5 DISTINCT ACCOUNTS</text></svg></div>
+  const [viewMode, setViewMode] = useState<'3d' | '2d'>('3d')
+
+  if (id === 'travel' || id === 'traveler') {
+    return (
+      <div style={{ width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '6px', gap: '5px' }}>
+          <button
+            onClick={() => setViewMode('3d')}
+            style={{
+              padding: '3px 8px',
+              fontSize: '8.5px',
+              fontWeight: 700,
+              borderRadius: '5px',
+              border: '1px solid #d0d7de',
+              background: viewMode === '3d' ? '#eef0ff' : '#fff',
+              color: viewMode === '3d' ? '#4f62ca' : '#657182',
+              cursor: 'pointer'
+            }}
+          >
+            3D Globe (Three.js)
+          </button>
+          <button
+            onClick={() => setViewMode('2d')}
+            style={{
+              padding: '3px 8px',
+              fontSize: '8.5px',
+              fontWeight: 700,
+              borderRadius: '5px',
+              border: '1px solid #d0d7de',
+              background: viewMode === '2d' ? '#eef0ff' : '#fff',
+              color: viewMode === '2d' ? '#4f62ca' : '#657182',
+              cursor: 'pointer'
+            }}
+          >
+            2D Route Map
+          </button>
+        </div>
+        {viewMode === '3d' ? (
+          <ThreeGlobe
+            traveler={id === 'traveler'}
+            originCity="San Francisco, USA"
+            destCity={id === 'traveler' ? 'Paris, France' : 'London, UK'}
+            distanceKm={id === 'traveler' ? 8950 : 8620}
+            timeElapsed={id === 'traveler' ? '11.2 hours' : '20 minutes'}
+            calculatedSpeed={id === 'traveler' ? 767 : 25860}
+            speedLimit={850}
+          />
+        ) : (
+          <FlightDiagram traveler={id === 'traveler'} />
+        )}
+      </div>
+    )
+  }
+
+  if (id === 'ring') {
+    return (
+      <div style={{ width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '6px', gap: '5px' }}>
+          <button
+            onClick={() => setViewMode('3d')}
+            style={{
+              padding: '3px 8px',
+              fontSize: '8.5px',
+              fontWeight: 700,
+              borderRadius: '5px',
+              border: '1px solid #d0d7de',
+              background: viewMode === '3d' ? '#eef0ff' : '#fff',
+              color: viewMode === '3d' ? '#4f62ca' : '#657182',
+              cursor: 'pointer'
+            }}
+          >
+            3D Topology (Three.js)
+          </button>
+          <button
+            onClick={() => setViewMode('2d')}
+            style={{
+              padding: '3px 8px',
+              fontSize: '8.5px',
+              fontWeight: 700,
+              borderRadius: '5px',
+              border: '1px solid #d0d7de',
+              background: viewMode === '2d' ? '#eef0ff' : '#fff',
+              color: viewMode === '2d' ? '#4f62ca' : '#657182',
+              cursor: 'pointer'
+            }}
+          >
+            2D Bipartite Schematic
+          </button>
+        </div>
+        {viewMode === '3d' ? (
+          <ThreeGraphRing fraudulent={true} />
+        ) : (
+          <div className="case-diagram ring-diagram"><svg viewBox="0 0 650 235" role="img" aria-label="Five accounts linked to a shared emulator and stolen card"><defs><pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e7ecf1"/></pattern></defs><rect width="650" height="235" rx="12" fill="url(#grid)"/>{[42,78,114,150,186].map((y,i)=><g key={i}><line x1="154" y1={y} x2="322" y2="87" stroke="#e1857d" strokeDasharray="4 4"/><line x1="154" y1={y} x2="322" y2="161" stroke="#e2b66b" strokeDasharray="4 4"/><circle cx="130" cy={y} r="17" fill="#fff" stroke="#e28178" strokeWidth="2"/><text x="130" y={y+4} textAnchor="middle">A{i+1}</text></g>)}<rect x="284" y="65" width="116" height="43" rx="8" fill="#f2efff" stroke="#aa9bdf"/><text x="342" y="84" textAnchor="middle">DEV_EMU_77</text><text x="342" y="98" textAnchor="middle" className="minor-label">shared emulator · degree 5</text><rect x="284" y="139" width="116" height="43" rx="8" fill="#fff7e8" stroke="#e7c782"/><text x="342" y="158" textAnchor="middle">CARD_4111</text><text x="342" y="172" textAnchor="middle" className="minor-label">stolen card · degree 5</text><line x1="400" y1="87" x2="507" y2="122" stroke="#e28178" strokeWidth="2"/><circle cx="535" cy="122" r="23" fill="#fff0ee" stroke="#e28178" strokeWidth="2"/><text x="535" y="126" textAnchor="middle">MULE</text><text x="342" y="220" textAnchor="middle" className="map-caption">10 SHARED-ENTITY EDGES · 5 DISTINCT ACCOUNTS</text></svg></div>
+        )}
+      </div>
+    )
+  }
+
   if (id === 'ato') return <div className="case-diagram timeline-diagram">{[{time:'−10 min',title:'Password reset',text:'Credential changed from a new location.',kind:'warn'},{time:'−2 min',title:'Unknown device',text:'Unrecognized emulator fingerprint signs in.',kind:'bad'},{time:'Now',title:'Passkey step-up',text:'Require WebAuthn before the transfer can continue.',kind:'good'}].map((x,i)=><div className="timeline-item" key={x.title}><span className={`timeline-dot ${x.kind}`}/><small>{x.time}</small><div><b>{x.title}</b><p>{x.text}</p></div>{i<2&&<ArrowRight size={15}/>}</div>)}</div>
   if (id === 'replay') return <div className="case-diagram gateway-diagram"><div className="gateway-step success"><ShieldCheck/><span><b>Original payment event</b><small>UUID evt_replay_991 · accepted</small></span></div><ArrowRight/><div className="gateway-step danger"><RotateCcw/><span><b>Cloned replay event</b><small>Same UUID received 0.8s later</small></span></div><ArrowRight/><div className="gateway-step muted"><X/><span><b>Stopped at gateway</b><small>Never reaches features or models</small></span></div></div>
   return <div className="case-diagram clean-route"><div><span className="clean-node account">ALICE</span><small>Verified account</small></div><i/><div><span className="clean-node device">KNOWN PC</span><small>Trusted hardware</small></div><i/><div><span className="clean-node settle">SETTLED</span><small>8 ms · frictionless</small></div></div>
@@ -87,7 +186,7 @@ function JudgeLab() {
   return <div className="wb-page">
     <div className="wb-page-heading"><div><div className="wb-eyebrow"><Activity size={14}/> PIPELINE VERIFICATION LAB</div><h1>Judge Test Lab</h1><p>Pick a case, run it through PayShield’s six defense layers, and see exactly where the decision happens.</p></div><button className="wb-primary" onClick={run} disabled={running}><Play size={15} fill="currentColor"/>{running?'Running the pipeline…':'Run this test'}</button></div>
     <div className="wb-case-grid">{cases.map((c,i)=><button key={c.id} onClick={()=>{setSelected(c.id);setStep(6);setRunning(false);setLiveLatency(null)}} className={`wb-case ${selected===c.id?'selected':''}`}><div><small>CASE 0{i+1}</small><StatePill decision={c.label as Decision}/></div><b>{c.title}</b><span>{c.summary}</span></button>)}</div>
-    <div className="wb-panel judge-summary"><div className="judge-top"><div><span className="wb-eyebrow">ACTIVE EVALUATION · {current.id.toUpperCase()}</span><h2>{current.title}</h2><p>{current.detail}</p></div><div className="verdict"><small>FINAL ACTION</small><StatePill decision={current.label as Decision}/><span>{liveLatency ? `${liveLatency} ms (Live API)` : `${current.latency} ms total`}</span></div></div>
+    <div className="wb-panel judge-summary"><div className="judge-top"><div><span className="wb-eyebrow">ACTIVE EVALUATION · {current.id.toUpperCase()}</span><h2>{current.title}</h2><p>{current.detail}</p></div><div className="verdict"><small>FINAL ACTION</small><StatePill decision={current.label as Decision}/><span><AnimatedCounter value={parseFloat(liveLatency || current.latency)} decimals={1} suffix=" ms" /></span></div></div>
       <CaseDiagram id={current.id}/>
       <div className="wb-subhead"><div><h3>Six-stage verification pipeline</h3><p>Short-circuit cases stop at the first decisive signal. Other cases continue through all six layers.</p></div><span className="sla-pill"><Timer size={14}/> Target under 30 ms</span></div>
       <div className="stage-list">{stages.map((s,i)=>{const evaluated=step>i, isStop=current.stop===i+1, status=!evaluated?'WAITING':isStop?(current.label==='CHALLENGE'?'WARN':'FAIL'):i===4&&current.id==='traveler'?'WARN':'PASS'; return <article key={s.icon} className={`stage-row ${evaluated?'evaluated':''} ${isStop?'stop':''}`}><span className="stage-index">{s.icon}</span><div className="stage-body"><b>{s.name}</b><small>{s.responsibility}</small>{evaluated&&<p>{isStop?current.detail:s.invariant}</p>}</div><span className={`stage-status ${status.toLowerCase()}`}>{status}{evaluated&&<small>{i===0?'0.8':i===1?'2.4':i===2?'4.6':i===3?'7.3':i===4?'1.6':'1.3'} ms</small>}</span></article>})}</div>
@@ -149,7 +248,7 @@ function Simulator() {
       <Slider label="Transaction amount" value={`$${amount}`} min={10} max={3500} step={10} n={amount} onChange={setAmount}/><Slider label="Time since previous event" value={`${minutes} min`} min={0} max={1440} step={5} n={minutes} onChange={setMinutes}/><div className="city-row"><label>Origin<select value={origin} onChange={e=>setOrigin(e.target.value)}>{['San Francisco','New York','London','Paris'].map(x=><option key={x}>{x}</option>)}</select></label><label>Current location<select value={destination} onChange={e=>setDestination(e.target.value)}>{['San Francisco','New York','London','Paris'].map(x=><option key={x}>{x}</option>)}</select></label></div><Slider label="Password change recency" value={password>=1440?'Over 24 hours':`${password} min ago`} min={0} max={1440} step={10} n={password} onChange={setPassword}/><Slider label="Login failures in last 5 minutes" value={String(failures)} min={0} max={8} step={1} n={failures} onChange={setFailures}/><label className="wb-toggle"><span><Fingerprint size={16}/><span><b>Emulator device detected</b><small>Simulate spoofed or virtual hardware</small></span></span><input type="checkbox" checked={emulator} onChange={e=>setEmulator(e.target.checked)}/><i/></label>
       <div className="velocity-note"><MapPin size={15}/><span>Travel speed: <b className={velocity>850?'bad':'good'}>{velocityLabel}{Number.isFinite(velocity)?' km/h':''}</b></span><small>{distance.toLocaleString()} km across {minutes} min</small></div>
     </section>
-    <section className="wb-panel inference-panel"><div className="panel-title-row"><div><h2>Engine inference</h2><p>Demo model output from the selected parameters.</p></div><span className="sim-tag">SIMULATED ENGINE</span></div><div className={`inference-banner ${decision.toLowerCase()}`}><div className="decision-ring"><strong>{Math.round(score*100)}</strong><small>risk / 100</small></div><div><small>RECOMMENDED ACTION</small><b>{decision}</b><p>{decision==='ALLOW'?'Signals look consistent with a legitimate customer.':decision==='CHALLENGE'?'Ask for a passkey or biometric check before approving.':'Critical signals exceed the configured block threshold.'}</p></div></div><div className="waterfall-head"><b>Risk drivers</b><small>Contributions add to the composite score</small></div><div className="waterfall">{features.map(f=><div className="waterfall-row" key={f.name}><span>{f.name}</span><div className="waterfall-track"><i className={f.value>.2?'high':''} style={{width:`${Math.max(1,f.value*235)}px`}}/></div><b>{f.value>0?'+':''}{f.value.toFixed(2)}</b></div>)}<div className="waterfall-total"><b>COMPOSITE RISK</b><strong>{score.toFixed(2)}</strong></div></div><div className="tri-thresholds"><span><i className="allow-dot"/> Allow &lt; 0.35</span><span><i className="challenge-dot"/> Challenge 0.35–0.74</span><span><i className="block-dot"/> Block ≥ 0.75</span></div><button className="payload-toggle" onClick={()=>setShowJson(v=>!v)}><Code2 size={15}/>{showJson?'Hide':'Show'} generated event JSON <ChevronDown size={15} className={showJson?'turn':''}/></button>{showJson&&<pre className="json-view"><code>{JSON.stringify({event_type:'PAYMENT',amount,currency:'USD',origin,destination,elapsed_minutes:minutes,device_is_emulator:emulator,password_changed_minutes_ago:password,auth_failures_5m:failures},null,2)}</code></pre>}{ran&&<div className="inline-success"><Check size={14}/> {liveApiResult ? `Live API evaluated in ${liveApiResult.latency_ms} ms (${liveApiResult.decision})` : 'Pipeline simulation finished in 18.4 ms'}</div>}</section></div>
+    <section className="wb-panel inference-panel"><div className="panel-title-row"><div><h2>Engine inference</h2><p>Demo model output from the selected parameters.</p></div><span className="sim-tag">SIMULATED ENGINE</span></div><div className={`inference-banner ${decision.toLowerCase()}`}><div className="decision-ring"><strong><AnimatedCounter value={score * 100} decimals={0} /></strong><small>risk / 100</small></div><div><small>RECOMMENDED ACTION</small><b>{decision}</b><p>{decision==='ALLOW'?'Signals look consistent with a legitimate customer.':decision==='CHALLENGE'?'Ask for a passkey or biometric check before approving.':'Critical signals exceed the configured block threshold.'}</p></div></div><div className="waterfall-head"><b>Risk drivers</b><small>Contributions add to the composite score</small></div><div className="waterfall">{features.map(f=><div className="waterfall-row" key={f.name}><span>{f.name}</span><div className="waterfall-track"><i className={f.value>.2?'high':''} style={{width:`${Math.max(1,f.value*235)}px`}}/></div><b>{f.value>0?'+':''}{f.value.toFixed(2)}</b></div>)}<div className="waterfall-total"><b>COMPOSITE RISK</b><strong>{score.toFixed(2)}</strong></div></div><div className="tri-thresholds"><span><i className="allow-dot"/> Allow &lt; 0.35</span><span><i className="challenge-dot"/> Challenge 0.35–0.74</span><span><i className="block-dot"/> Block ≥ 0.75</span></div><button className="payload-toggle" onClick={()=>setShowJson(v=>!v)}><Code2 size={15}/>{showJson?'Hide':'Show'} generated event JSON <ChevronDown size={15} className={showJson?'turn':''}/></button>{showJson&&<pre className="json-view"><code>{JSON.stringify({event_type:'PAYMENT',amount,currency:'USD',origin,destination,elapsed_minutes:minutes,device_is_emulator:emulator,password_changed_minutes_ago:password,auth_failures_5m:failures},null,2)}</code></pre>}{ran&&<div className="inline-success"><Check size={14}/> {liveApiResult ? `Live API evaluated in ${liveApiResult.latency_ms} ms (${liveApiResult.decision})` : 'Pipeline simulation finished in 18.4 ms'}</div>}</section></div>
   </div>
 }
 function Slider({label,value,min,max,step,n,onChange}:{label:string;value:string;min:number;max:number;step:number;n:number;onChange:(n:number)=>void}) { return <label className="wb-slider"><span><b>{label}</b><strong>{value}</strong></span><input type="range" min={min} max={max} step={step} value={n} onChange={e=>onChange(Number(e.target.value))}/><span className="slider-limits"><small>{min}</small><small>{max}</small></span></label> }
@@ -157,14 +256,19 @@ function Slider({label,value,min,max,step,n,onChange}:{label:string;value:string
 function GraphExplorer() {
   const [preset,setPreset]=useState<'ring'|'household'>('ring')
   const [selected,setSelected]=useState('')
+  const [is3D, setIs3D]=useState(true)
   const fraudulent=preset==='ring'
   const accounts=fraudulent?['ACC 01','ACC 02','ACC 03','ACC 04','ACC 05']:['PARENT','CHILD','SPOUSE']
   const entities=fraudulent?[{id:'DEV_EMU_77',type:'DEVICE',x:335,y:92,color:'#9172d5',risk:98,degree:5,neighbors:accounts.join(', ')},{id:'CARD_4111',type:'CARD',x:335,y:226,color:'#d7a442',risk:94,degree:5,neighbors:accounts.join(', ')},{id:'MULE_01',type:'BENEFICIARY',x:550,y:160,color:'#d96961',risk:99,degree:1,neighbors:'DEV_EMU_77'}]:[{id:'HOME_IP',type:'IP',x:335,y:160,color:'#37a5bb',risk:8,degree:3,neighbors:accounts.join(', ')},{id:'PHONE_P',type:'DEVICE',x:185,y:80,color:'#9172d5',risk:3,degree:1,neighbors:'PARENT'},{id:'PHONE_C',type:'DEVICE',x:485,y:80,color:'#9172d5',risk:4,degree:1,neighbors:'CHILD'},{id:'CARD_P',type:'CARD',x:185,y:235,color:'#d7a442',risk:2,degree:1,neighbors:'PARENT'},{id:'CARD_C',type:'CARD',x:485,y:235,color:'#d7a442',risk:3,degree:1,neighbors:'CHILD'}]
   const nodes=[...accounts.map((id,i)=>({id,type:'ACCOUNT',x:fraudulent?90:i===1?550:100,y:fraudulent?42+i*44:i===2?250:80,color:fraudulent?'#dc7168':'#6478dc',risk:fraudulent?94-i:3+i,degree:fraudulent?2:2,neighbors:fraudulent?'DEV_EMU_77, CARD_4111':'HOME_IP, personal device'})),...entities]
-  return <div className="wb-page"><div className="wb-page-heading"><div><div className="wb-eyebrow"><Network size={14}/> ENTITY RELATIONSHIPS</div><h1>Graph ring view</h1><p>Fraud often hides in relationships. Click a node to inspect what it shares and how much risk it carries.</p></div><div className="preset-switch"><button className={fraudulent?'active danger':''} onClick={()=>{setPreset('ring');setSelected('')}}><ShieldAlert size={14}/> Fraud ring</button><button className={!fraudulent?'active good':''} onClick={()=>{setPreset('household');setSelected('')}}><BadgeCheck size={14}/> Family household</button></div></div>
+  return <div className="wb-page"><div className="wb-page-heading"><div><div className="wb-eyebrow"><Network size={14}/> ENTITY RELATIONSHIPS</div><h1>Graph ring view</h1><p>Fraud often hides in relationships. Click a node to inspect what it shares and how much risk it carries.</p></div><div className="preset-switch"><button className={fraudulent?'active danger':''} onClick={()=>{setPreset('ring');setSelected('')}}><ShieldAlert size={14}/> Fraud ring</button><button className={!fraudulent?'active good':''} onClick={()=>{setPreset('household');setSelected('')}}><BadgeCheck size={14}/> Family household</button><button className={is3D?'active':''} onClick={()=>setIs3D(v=>!v)} style={{ marginLeft: '6px' }}>{is3D ? '3D Active (Three.js)' : 'Switch to 3D'}</button></div></div>
     <div className={`graph-callout ${fraudulent?'bad-callout':'good-callout'}`}><div><b>{fraudulent?'Coordinated mule ring detected':'Shared home network · legitimate activity'}</b><p>{fraudulent?'5 accounts connect to the same emulator and stolen card. Graph degree ≥ 5 exceeds the ring threshold.':'Three household accounts share one residential IP, while each person keeps distinct hardware and payment methods.'}</p></div><span>{fraudulent?'BLOCK GROUP':'KEEP CHECKOUT OPEN'}</span></div>
-    <div className="graph-explorer-layout"><section className="wb-panel graph-explorer"><div className="graph-counts"><span><i className="account-key"/>{accounts.length} accounts</span><span><i className="device-key"/>{fraudulent?'1':'2'} devices</span><span><i className="ip-key"/>{fraudulent?'0':'1'} IPs</span><span><i className="card-key"/>{fraudulent?'1':'2'} cards</span><span><i className="fraud-key"/>high-risk entities</span></div><svg viewBox="0 0 650 330" role="img" aria-label="Interactive graph of account relationships"><defs><pattern id="graph-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e9edf2"/></pattern></defs><rect width="650" height="330" rx="12" fill="url(#graph-grid)"/>{nodes.filter(n=>n.type!=='ACCOUNT').map(n=>nodes.filter(a=>a.type==='ACCOUNT'&&n.neighbors.includes(a.id)).map(a=><line key={`${n.id}-${a.id}`} x1={a.x+32} y1={a.y} x2={n.x-26} y2={n.y} stroke={fraudulent?'#ea9b92':'#9cb6e7'} strokeWidth={fraudulent?2:1.5} strokeDasharray={fraudulent?'4 4':'none'}/>))}{nodes.map(n=><g key={n.id} className="interactive-node" onClick={()=>setSelected(n.id)} role="button" tabIndex={0} onKeyDown={e=>e.key==='Enter'&&setSelected(n.id)}><circle cx={n.x} cy={n.y} r={selected===n.id?27:23} fill={selected===n.id?'#fff0ed':'white'} stroke={n.color} strokeWidth={selected===n.id?3:2}/><circle cx={n.x} cy={n.y} r="6" fill={n.color}/><text x={n.x} y={n.y+40} textAnchor="middle">{n.id}</text></g>)}</svg><div className="graph-degree"><b>Degree centrality:</b> number of distinct entities connected to a node. A shared device or card linked to 3+ accounts raises a ring alert.</div></section>
-      <aside className="wb-panel node-card"><div className="wb-eyebrow"><Waypoints size={14}/> NODE INSPECTOR</div>{selected?(()=>{const n=nodes.find(x=>x.id===selected)!;return <><h2>{n.id}</h2><span className="node-type">{n.type}</span><div className="node-risk"><span>Risk propagation</span><b className={n.risk>65?'bad':'good'}>{n.risk}%</b></div><RiskLine value={n.risk/100} color={n.risk>65?'#df746a':'#2ca47d'}/><div className="node-meta"><span>Graph degree<b>{n.degree} links</b></span><span>Connected entities<b>{n.neighbors}</b></span></div><div className={`node-verdict ${n.risk>65?'bad-callout':'good-callout'}`}>{n.risk>65?'This entity belongs to the flagged fraud community.':'This connection is consistent with normal household behavior.'}</div></>})():<div className="empty-inspector"><CircleHelp size={22}/><b>Select any node</b><p>See its entity type, degree, neighbors, and propagated risk score.</p></div>}<div className="algo-note"><b>Community rule</b><p>Flag a bipartite cluster when one device or payment method connects to at least <strong>3 distinct accounts</strong>, then trace all connected entities.</p></div></aside></div>
+    {is3D ? (
+      <ThreeGraphRing fraudulent={fraudulent} />
+    ) : (
+      <div className="graph-explorer-layout"><section className="wb-panel graph-explorer"><div className="graph-counts"><span><i className="account-key"/>{accounts.length} accounts</span><span><i className="device-key"/>{fraudulent?'1':'2'} devices</span><span><i className="ip-key"/>{fraudulent?'0':'1'} IPs</span><span><i className="card-key"/>{fraudulent?'1':'2'} cards</span><span><i className="fraud-key"/>high-risk entities</span></div><svg viewBox="0 0 650 330" role="img" aria-label="Interactive graph of account relationships"><defs><pattern id="graph-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#e9edf2"/></pattern></defs><rect width="650" height="330" rx="12" fill="url(#graph-grid)"/>{nodes.filter(n=>n.type!=='ACCOUNT').map(n=>nodes.filter(a=>a.type==='ACCOUNT'&&n.neighbors.includes(a.id)).map(a=><line key={`${n.id}-${a.id}`} x1={a.x+32} y1={a.y} x2={n.x-26} y2={n.y} stroke={fraudulent?'#ea9b92':'#9cb6e7'} strokeWidth={fraudulent?2:1.5} strokeDasharray={fraudulent?'4 4':'none'}/>))}{nodes.map(n=><g key={n.id} className="interactive-node" onClick={()=>setSelected(n.id)} role="button" tabIndex={0} onKeyDown={e=>e.key==='Enter'&&setSelected(n.id)}><circle cx={n.x} cy={n.y} r={selected===n.id?27:23} fill={selected===n.id?'#fff0ed':'white'} stroke={n.color} strokeWidth={selected===n.id?3:2}/><circle cx={n.x} cy={n.y} r="6" fill={n.color}/><text x={n.x} y={n.y+40} textAnchor="middle">{n.id}</text></g>)}</svg><div className="graph-degree"><b>Degree centrality:</b> number of distinct entities connected to a node. A shared device or card linked to 3+ accounts raises a ring alert.</div></section>
+        <aside className="wb-panel node-card"><div className="wb-eyebrow"><Waypoints size={14}/> NODE INSPECTOR</div>{selected?(()=>{const n=nodes.find(x=>x.id===selected)!;return <><h2>{n.id}</h2><span className="node-type">{n.type}</span><div className="node-risk"><span>Risk propagation</span><b className={n.risk>65?'bad':'good'}>{n.risk}%</b></div><RiskLine value={n.risk/100} color={n.risk>65?'#df746a':'#2ca47d'}/><div className="node-meta"><span>Graph degree<b>{n.degree} links</b></span><span>Connected entities<b>{n.neighbors}</b></span></div><div className={`node-verdict ${n.risk>65?'bad-callout':'good-callout'}`}>{n.risk>65?'This entity belongs to the flagged fraud community.':'This connection is consistent with normal household behavior.'}</div></>})():<div className="empty-inspector"><CircleHelp size={22}/><b>Select any node</b><p>See its entity type, degree, neighbors, and propagated risk score.</p></div>}<div className="algo-note"><b>Community rule</b><p>Flag a bipartite cluster when one device or payment method connects to at least <strong>3 distinct accounts</strong>, then trace all connected entities.</p></div></aside></div>
+    )}
   </div>
 }
 
