@@ -85,8 +85,11 @@
 ---
 
 ## 3. Live Deployment & Repository Links
-- **Live Cloud Web App**: [https://huggingface.co/spaces/neds0009/payshield-ai-explorer](https://huggingface.co/spaces/neds0009/payshield-ai-explorer)
+- **Official Production Dashboard (Vercel Global CDN)**: **[https://payshield-ai-pied.vercel.app](https://payshield-ai-pied.vercel.app)**
 - **Public GitHub Repository**: [https://github.com/Lambdacoder09/PayShield-AI](https://github.com/Lambdacoder09/PayShield-AI)
+- **Hugging Face Mirror**: [https://huggingface.co/spaces/neds0009/payshield-ai-explorer](https://huggingface.co/spaces/neds0009/payshield-ai-explorer)
+- **Local Standalone Artifact**: [interactive_architecture.html](file:///c:/Users/zayed/OneDrive/Desktop/projects/PayShield%20AI/interactive_architecture.html)
+- **Master Process & Commercial Guide (PDF)**: [PayShield_AI_Processes_Explained.pdf](file:///c:/Users/zayed/OneDrive/Desktop/projects/PayShield%20AI/PayShield_AI_Processes_Explained.pdf)
 - **Local Interactive Dashboard**: [interactive_architecture.html](file:///c:/Users/zayed/OneDrive/Desktop/projects/PayShield%20AI/interactive_architecture.html)
 - **Master Process & Commercial Guide (PDF)**: [PayShield_AI_Processes_Explained.pdf](file:///c:/Users/zayed/OneDrive/Desktop/projects/PayShield%20AI/PayShield_AI_Processes_Explained.pdf)
 
