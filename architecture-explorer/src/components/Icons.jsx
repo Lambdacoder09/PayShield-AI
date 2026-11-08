@@ -5,6 +5,7 @@ export const IconShield = ({ className = "w-5 h-5", color = "currentColor" }) =>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
   </svg>
 );
+export const Shield = IconShield;
 
 export const IconCpu = ({ className = "w-5 h-5", color = "currentColor" }) => (
   <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
@@ -13,6 +14,7 @@ export const IconCpu = ({ className = "w-5 h-5", color = "currentColor" }) => (
     <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
   </svg>
 );
+export const Cpu = IconCpu;
 
 export const IconNetwork = ({ className = "w-5 h-5", color = "currentColor" }) => (
   <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
@@ -57,6 +59,7 @@ export const IconPlay = ({ className = "w-5 h-5", color = "currentColor" }) => (
     <polygon points="5 3 19 12 5 21 5 3" />
   </svg>
 );
+export const Play = IconPlay;
 
 export const IconRefresh = ({ className = "w-5 h-5", color = "currentColor" }) => (
   <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
@@ -64,18 +67,21 @@ export const IconRefresh = ({ className = "w-5 h-5", color = "currentColor" }) =
     <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
   </svg>
 );
+export const RefreshCw = IconRefresh;
 
 export const IconCheck = ({ className = "w-5 h-5", color = "#10b981" }) => (
   <svg className={className} fill="none" stroke={color} strokeWidth="2.5" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
   </svg>
 );
+export const CheckCircle = IconCheck;
 
 export const IconAlert = ({ className = "w-5 h-5", color = "#f59e0b" }) => (
   <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
   </svg>
 );
+export const AlertTriangle = IconAlert;
 
 export const IconBlock = ({ className = "w-5 h-5", color = "#ef4444" }) => (
   <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
@@ -83,6 +89,7 @@ export const IconBlock = ({ className = "w-5 h-5", color = "#ef4444" }) => (
     <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
   </svg>
 );
+export const XCircle = IconBlock;
 
 export const IconArrowRight = ({ className = "w-5 h-5", color = "currentColor" }) => (
   <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
@@ -90,6 +97,7 @@ export const IconArrowRight = ({ className = "w-5 h-5", color = "currentColor" }
     <polyline points="12 5 19 12 12 19" />
   </svg>
 );
+export const ArrowRight = IconArrowRight;
 
 export const IconMapPin = ({ className = "w-5 h-5", color = "currentColor" }) => (
   <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
@@ -112,3 +120,8 @@ export const IconZap = ({ className = "w-5 h-5", color = "currentColor" }) => (
   </svg>
 );
 
+export const Activity = ({ className = "w-5 h-5", color = "currentColor" }) => (
+  <svg className={className} fill="none" stroke={color} strokeWidth="2" viewBox="0 0 24 24">
+    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+  </svg>
+);
